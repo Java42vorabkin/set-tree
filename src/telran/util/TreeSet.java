@@ -23,18 +23,46 @@ public class TreeSet<T> extends AbstractSet<T> {
 public TreeSet() {
 	 this((Comparator<T>)Comparator.naturalOrder());
  }
- private class TreeSetIterator implements Iterator<T> {
-//TODO required fields
+ private class TreeSetIterator<T> implements Iterator<T> {
+	 //TODO
+	 Node<T> currentNode = getMostLeftNode((Node<T>) root);
+	 // Done
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO 
+		return currentNode != null;
+		// Done
 	}
 
 	@Override
 	public T next() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO 
+		T res = currentNode.obj;
+		currentNode = currentNode.right != null ? 
+				getMostLeftNode(currentNode.right) :
+				getFirstGreaterParent(currentNode);	
+		return res;
+		//Done!!
+	}
+	 
+	private Node<T> getMostLeftNode(Node<T> node) {
+		Node<T> mostLeftNode = node;
+		while (mostLeftNode != null && mostLeftNode.left != null) {
+			mostLeftNode = mostLeftNode.left;
+		}
+		return mostLeftNode;
+	}
+	
+	private Node<T> getFirstGreaterParent(Node<T> node) {
+		Node<T> parentNode = node;
+		int diff = -1;
+		while(parentNode != null && diff<=0) {
+			diff = ((Comparator<T>)comp).compare(parentNode.obj, node.obj);
+			if(diff<=0) {
+				parentNode = parentNode.parent;
+			}
+		}
+		return parentNode;		
 	}
 	 
  }
@@ -90,8 +118,9 @@ public TreeSet() {
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO 
+		//Done!
+		return new TreeSetIterator<T>();
 	}
 
 	@Override
