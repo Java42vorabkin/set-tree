@@ -34,7 +34,7 @@ public TreeSet() {
 	 }
 	 return node.parent;
  }
- private class TreeSetIterator implements Iterator<T> {
+ private class TreeSetIterator extends AbstractIterator<T> {
 Node<T> current = root == null ? root : getMostLeftFrom(root);
 Node<T> previous = null;
 	@Override
@@ -44,7 +44,7 @@ Node<T> previous = null;
 	}
 
 	@Override
-	public T next() {
+	public T nextObject() {
 		T res = current.obj;
 		previous = current;
 		current = current.right != null ? getMostLeftFrom(current.right) :
@@ -52,7 +52,7 @@ Node<T> previous = null;
 		return res;
 	}
 	@Override 
-	public void remove() {
+	public void removeObject() {
 		if (isJunction(previous)) {
 			current = previous;
 		}
