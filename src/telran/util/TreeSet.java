@@ -13,6 +13,7 @@ public class TreeSet<T> extends AbstractSet<T> {
 		 this.obj = obj;
 	 }
  }
+private static final int SPACE_LEVEL = 3;
  private Node<T> root;
  private Comparator<T> comp;
  public TreeSet(Comparator<T> comp) {
@@ -171,5 +172,59 @@ Node<T> previous = null;
 		
 		return getParent(pattern) == null ;
 	}
+	public int width() {
+		
+		return width(root);
+	}
+	private int width(Node<T> rootTmp) {
+		if (rootTmp == null) {
+			return 0;
+		}
+		if (rootTmp.left == null && rootTmp.right == null) {
+			return 1;
+		}
+		return width(rootTmp.left) + width(rootTmp.right);
+	}
+	public int height() {
+		return height(root);
+		
+	}
+	private int height(Node<T> rootTmp) {
+		if (rootTmp == null) {
+			return 0;
+		}
+		int hl = height(rootTmp.left);
+		int hr = height(rootTmp.right);
+		
+		return 1 + Math.max(hl, hr);
+	}
+	public void displayTree() {
+		displayTree(0,root);
+	}
+	private void displayTree(int level, Node<T> rootTmp) {
+		if (rootTmp != null) {
+			displayTree(level + 1, rootTmp.right);
+			displayRoot(level, rootTmp);
+			displayTree(level + 1, rootTmp.left);
+		}
+		
+	}
+	private void displayRoot(int level, Node<T> rootTmp) {
+		System.out.print(" ".repeat(level * SPACE_LEVEL));
+		System.out.println(rootTmp.obj);
+		
+	}
+	public int sumOfMaxBranch() {
+		if (root.obj instanceof Integer) {
+			//TODO
+			//Perform casting to Integer for computing sum
+			return 0;
+		}
+		return -1;
+	}
+	public void displayTreeFileSystem() {
+		//TODO display tree in the form presented on the slide #39
+	}
+	
 
 }
