@@ -29,23 +29,50 @@ TreeSet<Integer> tree;
 	void heightTest() {
 		assertEquals(5, tree.height());
 	}
-//	@Test
-//	void displayTreeTest() {
-//		tree.displayTree();
-//	}
+	@Test
+	void displayTreeTest() {
+		System.out.println("=====Tree=====");
+		tree.displayTree();
+	}
 	@Test
 	void maxBranchSumTest() {
 		TreeSet<Integer> tree1 = getTreeForTest();
+		assertEquals(340, tree.sumOfMaxBranch());
 		assertEquals(36, tree1.sumOfMaxBranch());
+		System.out.println("=====Tree1=====");
+		tree1.displayTree();
 	}
 
 	private TreeSet<Integer> getTreeForTest() {
 		// TODO create tree on the slide #38
-		return null;
+		TreeSet<Integer> treeSet = new TreeSet<>((a, b)->getDigitsSumRegular(a) - getDigitsSumRegular(b));
+		int array[] = {4, 6, 5, 7, 11, 21};
+		for(int a:array) {
+			treeSet.add(a);
+		}
+		return treeSet;
+		// Done
 	}
 	@Test
 	void displayTreeFileSystemTest() {
+		System.out.println("=====TreeFileSystem=====");
 		tree.displayTreeFileSystem();
 	}
+	// Recursive digits sum calculation
+    private int getDigitsSumRecursive(int number) {
+        if(number == 0){
+          return 0 ;
+        }     
+        return (number % 10) + getDigitsSumRecursive(number / 10) ;
+    }
+	// Non Recursive digits sum calculation
+    private int getDigitsSumRegular(int number) {
+        int sum = 0;
+        while (number != 0) {
+            sum = sum + number % 10;
+            number = number / 10;
+        }
+        return sum;
+    }
 
 }

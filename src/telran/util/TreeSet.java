@@ -218,13 +218,33 @@ Node<T> previous = null;
 		if (root.obj instanceof Integer) {
 			//TODO
 			//Perform casting to Integer for computing sum
-			return 0;
+			return sumOfMaxBranch(root);
+			// Done
 		}
 		return -1;
 	}
+	private int sumOfMaxBranch(Node<T> rootTmp) {
+		if (rootTmp == null) {
+			return 0;
+		}
+		int valueL = sumOfMaxBranch(rootTmp.left);
+		int valueR = sumOfMaxBranch(rootTmp.right);
+		return Math.max(valueR, valueL) + ((Integer)(rootTmp.obj)).intValue();
+	}
 	public void displayTreeFileSystem() {
 		//TODO display tree in the form presented on the slide #39
+		displayRoot(0, root);
+		displayTreeFileSystem(0, root);
+		// Done
+	}
+	private void displayTreeFileSystem(int level, Node<T> rootTmp) {
+		if (rootTmp != null) {
+			displayTreeFileSystem(level + 1, rootTmp.right);
+			if(rootTmp != root) {
+				displayRoot(level, rootTmp);
+			}
+			displayTreeFileSystem(level + 1, rootTmp.left);
+		}		
 	}
 	
-
 }
